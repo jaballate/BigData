@@ -1,19 +1,18 @@
+#!/usr/bin/python3
 import os
 import csv
 import happybase
 import hashlib
 import sys
 
-def process(f, c):
-    csvfile = open('%s/datasets/SET-dec-2013.csv' % os.getcwd(), 'rb')
+def program(f, c):
+    csvfile = open('%s/Code_Fase1/datasets/SET-dec-2013.csv' % os.getcwd(), 'rb')
     elements = csv.reader(csvfile, delimiter=',', quotechar='|')
-    families = {'SensorData': {}}
+    family = {'SensorData': {}}
     string_families = "SensorData"
-    cont = 1
-    while cont <= c:
-        string_families += "|Measure%d" % cont
-        families.update({"Measure%d" % cont: {}})
-        cont += 1
+    for cont in range(c):
+        string_families += "|Measure%s" % str(cont+1)
+        family.update({"Measure%s" % str(cont+1): {}})
     #Estableciendo conexion
     connect = happybase.Connection(host="master.krejcmat.com", port=9090)
     connect.open()
@@ -21,13 +20,13 @@ def process(f, c):
     if "Sensores" in tables:
         table = connect.table('Sensores')
     else:
-        connect.create_table('Sensores', families)
+        connect.create_table('Sensores', family)
         table = connect.table('Sensores')
     print ("Se crearon las Familias %s" % string_families)
     batch = table.batch(batch_size=1000)
-    cont = 1
-    while cont <= f:
-        cont += 1
+    contf = 1
+    while contf <= f:
+        contf += 1
         for element in elements:
             key = hashlib.md5(element[0] + element[1].split(' ')[0]).hexdigest()
             SensorData = {'SensorData:Sensor': str(f) + element[0],
@@ -41,8 +40,6 @@ def process(f, c):
     connect.close()
 
 if __name__ == "__main__":
-    #arg = sys.argv
     f = int(sys.argv[1])
     c = int(sys.argv[2])
-    print ("Se crearan %s filas y %s columnas" % (f,c))
-    process(f, c)
+    program(f, c)

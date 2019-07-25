@@ -42,13 +42,12 @@ $ hdfs dfsadmin -report
 $ apt-get update
 $ apt-get install python python-pip git
 $ pip install happybase
-$ git clone https://github.com/yuniesky1986/bigdata.git
-$ cd bigdata
-
+$ git clone https://github.com/jaballate/BigData.git
+$ cd BigData
 
 ######Ejecutar script que crea en hbase la tabla con las familias
-$ ./elabore-datas.sh F(numero) C(numero)
-######Ejecutar script que crea el end.csv con los datos del F y C pasado al script
-$ ./return-datas.sh F(numero) C(numero)
+$ ./insert-into-hbase.sh F(numero) C(numero)
+######Ejecutar script que crea el csv con los datos de F y C pasado al script
+$ ./return-of-hbase.sh F(numero) C(numero)
 
 

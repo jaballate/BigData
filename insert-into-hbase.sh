@@ -4,7 +4,7 @@
 
 if [ $# != 2  ]
 then
-	echo "Debe introducir los dos parametro de replicacion, el primero (F) seran las filas, el segundo (C) las columnas"
+	echo "Debe introducir los parametro para replicar, el primero (F) son las filas, el segundo (C) las columnas"
 	exit 1
 fi
 
