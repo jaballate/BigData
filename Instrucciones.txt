@@ -36,10 +36,6 @@
 	•	./start-hadoop.sh 
 	•	./start-hbase.sh
 
-	Si desea detener hadoop se puede usar la siguiente instrucción.
-
-	•	./stop-hadoop.sh
-
 6.	Se habilita el puerto para hbase.
 
 	•	hbase thrift start -p 9090
