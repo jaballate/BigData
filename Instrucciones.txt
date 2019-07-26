@@ -1,53 +1,61 @@
-hadoop-hbase-docker
+﻿1.	Clonar el repo donde se encuentran las imágenes y moverse a la carpeta. 
 
-###Uso ####1] Clone git repository
-git clone https://github.com/krejcmat/hadoop-hbase-docker.git
-cd hadoop-hbase-docker
+	•	git clone https://github.com/krejcmat/hadoop-hbase-docker.git
+	•	cd hadoop-hbase-docker
 
-######a) Download from Docker hub
-docker pull krejcmat/hadoop-hbase-master:latest
-docker pull krejcmat/hadoop-hbase-slave:latest
+2.	Se debe ejecutar los siguientes comandos para descargar desde el contenedor  las imágenes master y esclavas deseadas.
 
-######b)Build from sources(Dockerfiles) The first argument of the script for bulilds is must be folder with Dockerfile. Tag for sources is latest
+	•	docker pull krejcmat/hadoop-hbase-master:latest
+	•	docker pull krejcmat/hadoop-hbase-slave:latest
 
-./build-image.sh hadoop-dnsmasq
+	La siguiente instrucción se ejecuta para compilar las imágenes a partir de las fuentes (Dockerfiles).
 
-######Check images
-$ docker images
+	•	./build-image.sh hadoop-hbase-base 
 
-####3] Initialize Hadoop (master and slaves) ######a)run containers The first parameter of start-container.sh script is tag of image version, second parameter configuring number of nodes.
+	La siguiente instrucción se puede usar para hacer un chequeo de las imágenes descargadas.
 
-$ ./start-container.sh latest 2
+	•	docker images
 
-#####Check status ######Check members of cluster
+3.	Inicializar clúster hadoop (maestro y esclavos), indicando el Tag de la imagen y la cantidad de esclavos (en este caso el 3 representa los esclavos).
 
-$ serf members
+	•	sudo ./start-container.sh latest 3
 
-#####b)Run Hadoop cluster ######Creating configures file for Hadoop and Hbase(includes zookeeper)
+4.	Se chequean y configuran los miembros en el master.
 
-$ cd ~
-$ ./configure-members.sh
+	La siguiente instrucción es para chequear los miembros.
 
-######Starting Hadoop
+	•	serf members
 
-$ ./start-hadoop.sh 
-$ ./start-hbase.sh 
-$ hbase thrift start
-#For stop Hadoop ./stop-hadoop.sh
+	La siguiente instrucción es para configurar los miembros.
 
-######Print status of Hadoop cluster
-$ hdfs dfsadmin -report
+	•	cd ~
+	•	./configure-members.sh
 
-######In the master
-$ apt-get update
-$ apt-get install python python-pip git
-$ pip install happybase
-$ git clone https://github.com/jaballate/BigData.git
-$ cd BigData
+5.	Se inicializa hadoop y hbase.
 
-######Ejecutar script que crea en hbase la tabla con las familias pasando (F) filas y (C) columnas
-$ ./insert-into-hbase.sh F(numero) C(numero)
-######Ejecutar script que crea el csv con los datos de (F) filas y (C) columnas pasado al script
-$ ./return-of-hbase.sh F(numero) C(numero)
+	•	./start-hadoop.sh 
+	•	./start-hbase.sh
 
+	Si desea detener hadoop se puede usar la siguiente instrucción.
 
+	•	./stop-hadoop.sh
+
+6.	Se habilita el puerto para hbase.
+
+	•	hbase thrift start -p 9090
+
+7.	Dentro del master se ejecutan las instrucciones para instalar python, la librería happybase y descargar el código fuente desde el repositorio.
+
+	•	apt-get update
+	•	apt-get install python python-pip git
+	•	pip install happybase
+	•	git clone https://github.com/jaballate/BigData.git
+	•	cd BigData
+
+8.	Dentro de la carpeta del proyecto descargado ejecutar el script para leer los datos del dataset y crear las familias en hbase. 
+
+	•	./set-into-hbase.sh F(numero) C(numero)
+
+9.	Dentro de la carpeta del proyecto descargado ejecutar el script de salida de datos.
+
+	•	./get-from-hbase.sh F(numero) C(numero)
