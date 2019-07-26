@@ -6,7 +6,7 @@ import hashlib
 import sys
 
 def program(f, c):
-    csvfile = open('%s/Code_Fase1/datasets/SET-dec-2013.csv' % os.getcwd(), 'rb')
+    csvfile = open('%s/datasets/SET-dec-2013.csv' % os.getcwd(), 'rb')
     elements = csv.reader(csvfile, delimiter=',', quotechar='|')
     family = {'SensorData': {}}
     string_families = "SensorData"
