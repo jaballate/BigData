@@ -8,4 +8,4 @@ then
 	exit 1
 fi
 
-python Code_Fase1/replica_into_hbase.py $1 $2
+python Code_Fase1/set_into_hbase.py $1 $2

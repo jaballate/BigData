@@ -8,4 +8,4 @@ then
 	exit 1
 fi
 
-python Code_Fase1/hbase_into_csv.py $1 $2
+python Code_Fase1/get_from_hbase.py $1 $2
